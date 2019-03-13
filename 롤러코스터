@@ -1,0 +1,105 @@
+##SASA에 숨겨져있는 투명 롤러코스터를 타기 위해서는 사전 등록이 필요하다.
+
+##사전등록 시스템에 이니셜을 입력하면, 등록이 되는데 
+##등록하는 순서대로 탈 수 있다고 한다.
+
+##물론, 사정이 생겨서 등록을 취소 할 수도 있다고 한다.
+
+##추가기능으로 미리 등록한 사람이 다른사람과 교체도 가능하다고 한다.
+
+##롤러코스터를 운영하던 사세종은 명단을 출력할때
+##한번에 4명씩 밖에 못타기 떄문에, 총 몇명이 탔는지
+##그리고 4명씩 명단을 출력해서 사용하고 있었다.
+
+##그런데, 현장접수를 받지 않는다는 항의가 너무 들어와서 현장접수를 받기 시작하였다.
+
+##현장접수를 받기 시작한 이후, 명령어를 수정하여 
+##현재 롤러코스터에 타는 사람을 출력하는 BOARD 명령어와
+##현재 롤러코스터를 타기 위해서 기다리는 WAIT를 추가하였다.
+
+##다만, WAIT 명령어를 넣었을때 기다리는 사람이 없으면 롤러코스터는 더이상 운영하지 않는다고 한다.
+
+
+##사세종이가 만든 프로그램을 ArrayList 를 이용하여 작성해보자.
+
+
+##[명령어]
+##ADD 등록할이니셜 
+##REMOVE 예약취소할이니셜
+##SET 예약한이니셜 교체할이니셜 
+##BOARD 탑승자 4명 출력
+##WAIT 기다리고 있는 사람 수 출력
+
+##EX)
+##BOARD
+##이니셜 이니셜 이니셜 이니셜
+##WAIT
+##2people
+##BOARD
+##이니셜 이니셜
+##WAIT
+##0people
+##Program End
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class 롤코4 {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		ArrayList <String> arr = new ArrayList <String>();
+		int count = 0;
+		System.out.println("명령어와 이름을 입력해 주세요");
+		while(true) {
+			String a = sc.nextLine();
+			String [] b = a.split(" ");
+			if(b[0].equals("ADD")) {
+				arr.add(b[1]);
+			}else if(b[0].equals("REMOVE")) {
+				arr.remove(b[1]);
+			}else if(b[0].equals("SET")) {
+				int c = ValueOf(b[1]);
+				arr.set(c, b[2]);
+			}else if(b[0].equals("BOARD")) {
+				
+				System.out.println(arr.size());
+				for(int i=0; i<arr.size();i++) {
+					if(arr.size()<4) {
+						for(int k=0; k<=arr.size();k++) {
+							arr.remove(0);
+						}//end for
+					}//end if
+					count++;
+					System.out.print(arr.get(i) + " ");
+					if(count==4) {
+						for(int j=0;j<count;j++) {
+							arr.remove(0);
+							
+						}//end for
+						System.out.println();
+						//System.out.println(arr.get(0));
+						count=0;
+					
+					}//end if
+					
+					
+				}//end for
+			
+			}//end else if 3
+			else if(b[0].equals("WAIT")) {
+				System.out.println(arr.size());
+				if(arr.size()==0) {
+					break;
+				}//end if
+			}//end else if 4
+sc.close();
+		} //end while
+	} // end main
+
+	private static int ValueOf(String string) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}
